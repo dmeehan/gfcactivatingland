@@ -1,0 +1,25 @@
+# This file collects all required third-party applications that are
+# needed to run this project. Later you can install all these apps
+# in a row  using pip.
+#  Example::
+#
+#     pip install -r requirements.txt
+
+# python modules
+psycopg2
+PIL
+markdown
+
+# django third party modules
+django==1.2.5
+south==0.7.3
+django-haystack==1.2.4
+django-imagekit==0.3.6
+django-flatblocks
+django-grappelli==2.2
+django-registration
+django-profiles
+django-admin_tools==0.4.0
+
+# github
+-e git+git://github.com/dmeehan/actionmanual.git#egg=actionamanual
