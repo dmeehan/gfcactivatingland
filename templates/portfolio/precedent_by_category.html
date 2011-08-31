@@ -1,0 +1,10 @@
+{% extends "portfolio/precedent_list.html" %}
+{% block title %}{{ block.super }} | Categories | {{ category.name }}{% endblock %}
+{% block page_header %}
+<header>
+    <img src="{{ category.medium.url }}" 
+         width="48"
+     />
+    <h1>Resources / {{ category.name }} / Precedents</h1>
+</header>
+{% endblock page_header %}

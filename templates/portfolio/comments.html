@@ -1,0 +1,19 @@
+{% if project.enable_comments %}
+    <section id="comments">
+        {% load comments %}
+        {% load markup %}
+        {% get_comment_list for project as comment_list %}
+        {% if comment_list %}
+        <h4>What People are Saying About {{ project.title }}</h4>
+        {% for comment in comment_list %}
+            <article>
+                <p class="commenter"><em>On {{ comment.submit_date|date:"F j, Y" }}, 
+               {{ comment.name }} said:</em></p>
+                <p>{{ comment.comment|markdown:"safe" }}</p>
+            </article>
+        {% endfor %}
+        {% endif %}
+        <h4>Add Your Thoughts and Ideas About {{ project.title }}!</h4>
+        {% render_comment_form for project %}
+    </section>
+{% endif %}

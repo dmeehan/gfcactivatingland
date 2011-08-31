@@ -1,0 +1,14 @@
+{% extends "comments/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Thanks for commenting" %}.{% endblock %}
+
+{% block content %}
+<header>
+  <h1>{% trans "Thank you for your comment" %}{% if user.is_authenticated %}, {{ user.first_name }}.
+  {% else %}{% if comment.user_name %}, {{ comment.user_name }}.{% endif %}{% endif %}</h1>
+</header>
+<div class="info">
+  <p><a href="{{ comment.get_absolute_url }}">Return to the discussion.</a></p>
+</div>
+{% endblock %}

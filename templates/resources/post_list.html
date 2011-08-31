@@ -1,0 +1,35 @@
+{% extends "resources/resources_base.html" %}
+{% block section_title %}{{ block.super }}| Action Blog{% endblock section_title %}
+{% block page_header %}
+<header>
+    <h1>Resources / Action Blog</h1>
+</header>
+{% endblock page_header %}
+
+{% block resources %}
+{% for object in object_list %}
+<article class="essay">
+    <header>
+        <h2>{{ object.title }}</h2>
+        <p class="posted">Posted by {{ object.posted_by.first_name }} on {{ object.pub_date|date:"F d, Y" }}</p>
+    </header>
+    <section class="image">
+    {% for image in object.images.all %}
+            {% if image.public %}
+            <a href="{{ object.get_absolute_url }}">
+            <img src="{{ image.large.url }}" 
+                 width="440"                        
+                 alt="{% if image.caption %}{{ image.caption }}
+                      {% else %}{{ image.title }}{% endif %}"
+                title="{{ image.title }}"/>
+            </a>
+            {% endif %}
+            {% endfor %}
+    </section>
+    <section class="description">
+        <p>{{ object.excerpt|safe }}</p>
+        <a href="{{ object.get_absolute_url }}">Read More</a>
+    </section>
+</article>
+{% endfor %}
+{% endblock resources %}

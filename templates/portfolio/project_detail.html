@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+{% block css %}
+    {{ block.super }}
+<!--<link href="/static/css/colorbox.css" rel="stylesheet" />-->
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/jquery-lightbox/css/jquery.lightbox-0.5.css" 
+media="screen" />
+{% endblock %}
+{% block bodyid %}id="explore"{% endblock bodyid %}
+{% block content %}
+{% block page_header %}
+<header>
+    <h1>{{ project.title }}
+    {% for category in project.categories.all %}
+        <a style=""
+           title="{{ category.group.name }}: {{ category.name }}" 
+           href="{% url ideas-by-category category.slug %}"><img style="float:none; padding:0 0 0 0; margin:0 0 0 0;" src="{{ category.small.url }}"
+           height="{{ category.small.height }}"
+           width="{{ category.small.width }}" />
+        </a>
+    {% endfor %}
+    </h1>
+</header>
+{% endblock page_header %}
+{% block project %}
+<div class="detail">
+    <section class="focus">
+        <article id="project" class="idea">
+          <section id="slideshow"><a href="#" class="control prev" title="Previous Image"><span>&lt;</span></a>
+            <ul id="gallery">
+              {% for image in project.images.all %}
+              {% if image.public %}
+                <li>
+                    <img src="{{ image.large.url }}" 
+                         width="{{ image.large.width }}" 
+                         height="{{ image.large.height }}" 
+                         alt="{% if image.caption %}{{ image.caption }}{% else %}{{ image.title }}{% endif %}" 
+                         title="{{ image.title }}"/>
+                    <p class="caption">{{ image.caption }}</p>
+                    <a href="{{ image.max.url }}" 
+                       class="control zoom" 
+                       title="{{ image.caption }}">
+                       <span>+</span>
+                    </a>
+                </li>
+              {% endif %}  
+              {% endfor %}
+            </ul>
+            {% block project_type %}            
+            {% endblock project_type %}
+            <a href="#" class="control next" title="Next Image"><span>&gt;</span></a> </section>
+          <section id="classification">
+            {% load tagging_tags %}
+            {% tags_for_object project as tags %}
+            {% if tags %}
+            <p class="tags"><strong>Tags:</strong> <em> {% for tag in tags %} <a href="{% block tag_url %}{% endblock %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+              {% endfor %} </em> 
+          </section>
+          {% endif %}
+          <section id="description">
+            <h2>{{ project.tagline }}</h2>
+            {{ project.description_html|safe }} </section>
+            
+          {% block designers %}
+          {% if project.firms.all or project.designers.all %}
+          <section id="designers">
+            <h3>The Designers</h3>
+            <ul id="designer">
+              {% for item in project.firms.all %}
+              <li><a href="{{ item.firm.website }}" 
+                           title="{{ item.firm.name }}"> <strong>{{ item.firm.name }}</strong></a> &nbsp;&nbsp;<em>{{ item.firm.city }}, {{ item.firm.state }}</em> {% if item.blurb %}
+                {{ item.blurb|safe }}
+                {% else %}
+                <p>{{ item.firm.description }}</p>
+                {% endif %} </li>
+              {% empty %}
+              {% for item in project.designers.all %}
+              <li> {% if item.designer.website %} <a href="{{ item.designer.website }}" 
+                                   title="{{ item.designer.full_name }}"> {% endif %} <strong>{{ item.designer.full_name }}</strong> {% if item.designer.website %} </a> {% endif %}
+                {% if item.designer.city %}&nbsp;&nbsp;<em>{{ item.designer.city }}{% endif %}
+                {% if item.designer.state %}, {{ item.designer.state }}{% endif %}</em> {% if item.blurb %}
+                {{ item.blurb|safe }}
+                {% else %}
+                {% if item.designer.description %}
+                <p>{{ item.designer.description }}</p>
+                {% endif %}
+                {% endif %} </li>
+              {% endfor %}
+              {% endfor %}
+            </ul>
+          </section>
+          {% endif %}
+          {% endblock designers%}
+          
+          {% block website %}
+          <section id="website">
+            <p>Learn more at: {{ project.website|urlize }}</p>
+          </section>
+          {% endblock website %}
+        </article>
+    </section>
+    {% block comments %}
+    {% if project.enable_comments %}
+    <aside id="comments">
+        {% load comments %}
+        {% load markup %}
+        {% get_comment_list for project as comment_list %}
+        {% if comment_list %}
+        <section class="comment-list">
+            <h2>What People are Saying About {{ project.title }}</h2>
+            {% for comment in comment_list %}
+                <article class="comment">
+                    <p class="commenter"><em>On {{ comment.submit_date|date:"F j, Y" }} at {{ comment.submit_date|date:"h:i A" }}, 
+                   {{ comment.name }} said:</em></p>
+                   <div class="comment-text">
+                   {{ comment.comment|markdown:"safe" }}
+                   </div>
+                </article>
+            {% endfor %}
+        </section>
+        {% endif %}
+        <section class="comment-form">
+            <h2>Add Your Thoughts About {{ project.title }}!</h2>
+            {% render_comment_form for project %}
+        </section>
+    </aside>
+   {% endif %}
+   {% endblock comments %}
+</div>
+{% endblock project %}
+
+
+{% block resources %}
+{% load tagging_tags %}
+<aside id="related-resources">
+  <h2>Related Resources</h2>
+  {% block links %}
+  {% tagged_items_related project resources.Web as links 10 live %}
+  {% if links %}
+  <section class="resources">
+    <h3>Web Resources</h3>
+    <ul>
+      {% for link in links %}
+      <li><a  class="tooltip-target"
+                    id="link-target-{{ forloop.counter }}"
+                    href="{{ link.get_absolute_url }}"> {{ link.title }} </a> {% if link.description %}
+        <p class="tooltip-content" id="link-content-{{ forloop.counter }}">{{ link.description|striptags|safe|truncatewords:25 }}</p>
+        {% endif %} </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% endblock links %}
+  {% tagged_items_related project resources.Essay as essays 10 live %}
+  {% block essays %}
+  {% if essays %}
+  <section class="resources">
+    <h3>Action Manual Articles</h3>
+    <ul>
+      {% for essay in essays %}
+      <li><a  class="tooltip-target"
+              id="essay-target-{{ forloop.counter }}"
+              href="{{ essay.get_absolute_url }}"> {{ essay.title }} </a> {% if essay.excerpt %}
+        <p class="tooltip-content" id="essay-content-{{ forloop.counter }}">{{ essay.excerpt|striptags|safe|truncatewords:25 }}</p>
+        {% endif %} </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% endblock essays %}
+  
+  {% block orgs %}
+  {% tagged_items_related project resources.ResourceOrganization as orgs 10 %}
+  {% if orgs %}
+  <section class="resources">
+    <h3>Organizations</h3>
+    <ul>
+      {% for org in orgs %}
+      <li><a  class="tooltip-target"
+                    id="org-target-{{ forloop.counter }}"
+                    href="{{ org.get_absolute_url }}"> {{ org.name }} </a> {% if org.description %}
+        <p class="tooltip-content" id="org-content-{{ forloop.counter }}">{{ org.description|truncatewords:25 }}</p>
+        {% endif %} </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% endblock orgs %}
+  
+  {% block people %}
+  {% tagged_items_related project resources.ResourcePerson as people 10 %}
+  {% if people %}
+  <section class="resources">
+    <h3>People</h3>
+    <ul>
+      {% for person in people %}
+      <li><a  class="tooltip-target"
+                    id="person-target-{{ forloop.counter }}"
+                    href=""> {{ person.name }} </a> {% if person.description %}
+        <p class="tooltip-content" id="person-content-{{ forloop.counter }}">{{ person.description|truncatewords:25 }}</p>
+        {% endif %} </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% endblock people %}
+  
+  {% block related_projects %}
+  {% tagged_items_related project portfolio.Idea as projects 4 published %}
+  {% if projects %}
+  <section>
+    <h2>Related Ideas</h2>
+    <ul>
+      {% for project in projects %}
+      <li class="project-teaser"> {% for image in project.images.all %}
+        {% if image.public and image.lead %} <a 
+                      href="{{ project.get_absolute_url }}" 
+                      title="{{ project.title }}"> <img class="tooltip-target"
+                             id="project-target-{{ forloop.parentloop.counter }}"
+                             src="{{ image.small.url }}" 
+                             width="{{ image.small.width }}"
+                             height="{{ image.small.height }}"
+                             alt="{% if image.caption %}{{ image.caption }}
+                                  {% else %}{{ image.title }}{% endif %}" /> </a> {% endif %}
+        {% endfor %}
+        <p><a href="{{ project.get_absolute_url }}"
+                          title="{{ project.title }}"> {{ project.title }} </a> </p>
+        <div class="tooltip-content" id="project-content-{{ forloop.counter }}">
+          <h4>{{ project.title }}</h4>
+          <p>{{ project.tagline }}</p>
+          <p class="categories"> {% for category in project.categories.all %}
+            {{ category.name }}&nbsp;
+            {% endfor %} </p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% endblock related_projects %} 
+</aside>
+{% endblock resources %}
+{% endblock content%}
+
+{% block js_local %}
+<!-- popover tooltips -->
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery/jquery.ezpz_tooltip.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/popovers.js"></script>
+<!-- image reel -->
+<script type="text/javascript" 
+src="{{ MEDIA_URL }}js/jquery/jcarousel-lite/jcarousellite_1.0.1.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery/easing/jquery.easing.1.3.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#slideshow").jCarouselLite({
+            start:0,
+            circular:false,
+            visible: 1,
+            mouseWheel: false,
+            speed: 200,
+            easing: "easeInOutSine",
+            btnNext: ".next",
+            btnPrev: ".prev"
+	    });
+    });
+</script>
+<!-- image lightbox -->
+<!--<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery/jquery.colorbox.min.js"></script>-->
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-lightbox/js/jquery.lightbox-0.5.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+	   $("#gallery li a").lightBox({
+            imageLoading:'{{ MEDIA_URL }}js/jquery-lightbox/images/lightbox-ico-loading.gif',
+            imageBtnPrev:'{{ MEDIA_URL }}js/jquery-lightbox/images/lightbox-btn-prev.gif',
+            imageBtnNext:'{{ MEDIA_URL }}js/jquery-lightbox/images/lightbox-btn-next.gif',			
+			imageBtnClose:'{{ MEDIA_URL }}js/jquery-lightbox/images/lightbox-btn-close.gif',		
+			imageBlank:'{{ MEDIA_URL }}js/jquery-lightbox/images/lightbox-blank.gif'
+	   
+	   });
+    });
+</script>
+{% endblock %} 

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block section_title %} | Profile | {{ profile.full_name }}{% endblock %}
+{% block bodyid %}id="profile"{% endblock bodyid %}
+{% block content %}
+<nav style="padding:0; border:0;">
+{% block profile_nav %}
+<img src="{{ MEDIA_URL }}images/profile_placeholder.png" 
+     width="198" 
+     height="198" 
+     style="border:1px solid #ccc;" />
+{% endblock profile_nav %}
+</nav>
+<div class="list">
+<header>
+    <h1>{% if profile.first_name %}
+           {{ profile.full_name }}
+        {% else %}
+            {{ profile.user }}
+        {% endif %}
+    </h1>
+    {% if profile.city %}
+    <p style="color:#999; text-transform:uppercase;">{{ profile.city }}, {{ profile.state }} </p>
+    {% endif %}
+    <p style="color:#999;">
+        {% if profile.first_name %}
+           {{ profile.full_name }}
+        {% else %}
+            {{ profile.user }}
+        {% endif %} joined the Action Manual on {{ profile.user.date_joined|date:"F d, Y" }}</p>
+</header>
+
+{% block profile %}
+{% endblock profile %}
+
+</div>
+{% endblock content %}

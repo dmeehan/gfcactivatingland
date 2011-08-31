@@ -1,0 +1,73 @@
+{% extends "profiles/profile_base.html" %}
+{% block section_title %}{{ block.super }} | {{ profile.full_name }}{% endblock %}
+
+{% block profile %}
+{% if profile.user.idea_set.all %}
+{% for idea in profile.user.idea_set.all %}
+{% if request.user != profile.user and idea.status != idea.STATUS_PUBLISHED %}
+
+{% else %}
+<article style="border:1px solid #ccc; overflow: auto; margin-bottom:20px;">
+    <section>
+        {% for image in idea.images.all %}
+        {% if image.public and image.lead %}
+        {% ifequal idea.status idea.STATUS_PUBLISHED %}
+        <a href="{{ idea.get_absolute_url }}">
+        {% endifequal %}
+            <img src="{{ image.medium.url }}"
+                 width="300"
+                 alt="{% if image.caption %}{{ image.caption }}
+                      {% else %}{{ image.title }}{% endif %}"
+                 title="{{ image.title }}" 
+                 style="float:left;padding-right:20px;" />
+         {% ifequal idea.status idea.STATUS_PUBLISHED %}
+         </a>
+         {% endifequal %}
+         {% endif %}
+         {% endfor %}
+    </section>
+    <section style="margin:10px">
+        <header>
+            <h3>{{ idea.title }} 
+            {% ifequal request.user profile.user %}
+                &nbsp;|&nbsp;<a href="{% url idea-edit idea.id %}">Edit</a>
+            {% endifequal %}
+            {% ifequal idea.status idea.STATUS_PUBLISHED %}
+                 &nbsp;|&nbsp;<a href="{{ idea.get_absolute_url }}">View</a>
+            {% endifequal %}
+            </h3>
+        </header>
+        <p>{{ idea.tagline }}</p>
+        <p>{{ idea.city }}, {{ idea.state }}</p>
+        <ul class="category-list">
+          {% for category in idea.categories.all %}
+          <li class="{{ category.name|lower }}"> <a title="{{ category.group.name }}: {{ category.name }}" 
+                       href="{% url ideas-by-category category.slug %}"> <img src="{{ category.small.url }}"
+                             height="{{ category.small.height }}"
+                             width="{{ category.small.width }}" /></a></li>
+          {% endfor %}
+        </ul>
+        {% ifequal idea.status idea.STATUS_PENDING %}
+            <p>Thank you for submitting your idea! It is being review by our staff and 
+            we will contact you when it is ready to be published.</p>
+        {% endifequal %}
+    </section>
+</article>
+{% endif %}
+{% endfor %}
+{% else %}
+    {% ifequal request.user profile.user %}
+        <p>You haven't added any ideas.</p>
+        <p class="submit-row"><a class="button primary" href="{% url idea-add %}">Share Your Idea</a></p>
+    {% else %}
+    <p>
+    {% if profile.first_name %}
+           {{ profile.full_name }}
+        {% else %}
+            {{ profile.user }}
+        {% endif %}
+        hasn't shared any ideas...yet.
+    </p>
+    {% endifequal %}
+{% endif %}
+{% endblock profile %}

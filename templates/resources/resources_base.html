@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block section_title %}{{ block.super }}| Resources{% endblock section_title %}
+{% block bodyid %}id="resources"{% endblock bodyid %}
+{% block content %}
+{% load flatblock_tags %}
+{% block page_header %}
+<header>
+    {% flatblock "resources.title" using "flatblocks/flatblock_header.html" %}
+</header>
+{% endblock page_header %}
+
+<div class="list">
+{% block resources %}
+{% endblock resources %}
+</div>
+{% block resource_nav %}
+<nav>
+    <h2>Find Resources</h2>
+    {% if categories %}
+    {% regroup categories by group as cats %}
+    {% for group in cats %}
+        <h3>By {{ group.grouper }}</h3>
+        <ul>
+        {% for category in group.list %}
+            <li style="clear:both;overflow:auto;margin:5px 0;">
+                <a style="line-height:32px; text-decoration:none;" href="{% url resources-by-category  category.slug %}">
+                <img style="float:left; margin-right:5px" src="{{ category.small.url }}" />
+                {{ category.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+    {% endif %}
+    <h3>By Type</h3>
+    <ul>
+        <li><a href="{% url resources-post-list %}">Action Blog</a></li>
+        <li><a href="{% url resources-link-list %}">Web Resources</a></li>
+        <li><a href="{% url resources-org-list %}">Organizations</a></li>
+        <!--<li><a href="{% url resources-person-list %}">People</a></li>-->
+        <li><a href="{% url precedent-list %}">Precedents</a></li>
+    </ul>
+</nav>
+{% endblock resource_nav %}
+{% endblock content %}

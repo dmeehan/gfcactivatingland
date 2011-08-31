@@ -1,0 +1,30 @@
+{% extends "resources/resources_index.html" %}
+
+{% block title %}{{ block.super }} | {{ category.name }}{% endblock title %}
+{% block page_header %}
+<header>
+    <img src="{{ category.medium.url }}" 
+         width="48"
+     />
+    <h1>Resources / {{ category.name }}</h1>
+</header>
+{% endblock page_header %}
+{% block view_all_articles %}
+    <p class="view-all"><a class="drilldown"  href="{% url resources-post-by-category category.slug %}">View All Posts for {{ category.name }}</a></p>
+{% endblock view_all_articles %}
+
+{% block view_all_precedents %}
+        <p class="view-all"><a class="drilldown"  href="{% url precedent-by-category category.slug %}">View All Precedents for {{ category.name }}</a></p>
+    {% endblock view_all_precedents %} 
+
+{% block view_all_links %}
+    <p class="view-all"><a class="drilldown" href="{% url resources-link-by-category category.slug %}">View All Links for {{ category.name }}</a></p>
+{% endblock view_all_links %}
+
+{% block view_all_people %}
+    <p class="view-all"><a class="drilldown" href="{% url resources-person-by-category category.slug %}">View All People for {{ category.name }}</a></p>
+{% endblock view_all_people %}
+
+{% block view_all_orgs %}
+    <p class="view-all"><a class="drilldown" href="{% url resources-org-by-category category.slug %}">View All Orgs for {{ category.name }}</a></p>
+{% endblock view_all_orgs %}

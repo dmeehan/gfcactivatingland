@@ -1,0 +1,23 @@
+{% extends "contacts/contacts_detail.html" %}
+
+{% block title %}
+{{ block.super}} | {{ object.full_name }}
+{% endblock title %}
+
+{% block content_header %}
+<h1>{{ object.full_name }}</h1>
+{% endblock content_header %}
+
+{% block gender %}
+    {% if object.gender %}
+    <p class="birthdate">Gender: {{ object.gender }}</p>
+    {% endif %}
+{% endblock gender %}
+    
+{% block birthdate %}
+    {% if object.birthdate %}<p class="birthdate">Birthdate: {{ object.birthdate }}</p>{% endif %}
+{% endblock birthdate %}
+
+{{ block mobile }}
+    {% if object.mobile %}<p class="mob">c: {{ object.mobile }}</p>{% endif %}
+{{ endblock mobile }}

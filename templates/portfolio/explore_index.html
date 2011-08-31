@@ -1,0 +1,88 @@
+{% extends "portfolio/explore_base.html" %}
+{% load portfolio_tags %}
+{% block project_list %}
+<section>
+    <header><h2>Recently Added</h2></header>
+{% for idea in recent %}
+    <article class="card {{ idea|model_name|lower }}">
+        {% for image in idea.images.all %}
+        {% if image.public and image.lead %}
+            <a href="{{ idea.get_absolute_url }}">
+            <img src="{{ image.medium.url }}" 
+                 width="220"
+                 alt="{% if image.caption %}{{ image.caption }}
+                      {% else %}{{ image.title }}{% endif %}"
+                 title="{{ image.title }}"/>
+            </a>
+            {% endif %}
+            {% endfor %}
+            <section class="description">
+                <h3><a href="{{ idea.get_absolute_url }}">{{ idea.title }}</a></h3>
+                <p>{{ idea.tagline|truncatewords:10 }}</p>
+                <p><strong><a href="{% url ideas-by-city idea.city|slugify %}">{{ idea.city }}</a></strong><br/>
+                <em>Added by {{ idea.user }}</em></p>
+            </section>
+            <ul class="category-list">
+                {% for category in project.categories.all %}
+                <li class="{{ category.name|lower }}"> 
+                    <a title="{{ category.group.name }}: {{ category.name }}" 
+                       href="{% url ideas-by-category category.slug %}"> <img src="{{ category.small.url }}"
+                       height="{{ category.small.height }}"
+                       width="{{ category.small.width }}" />
+                    </a>
+                </li>
+        {% endfor %}
+        </ul>
+         <span class="project-type">
+            {% if idea|model_name == 'Idea' %}
+            Idea
+            {% else %}
+            Completed
+            {% endif %}
+            </span>
+    </article>
+{% endfor %}
+</section>
+<section>
+    <header><h2>Featured</h2></header>
+{% for idea in featured %}
+    <article class="card {{ idea|model_name|lower }}">
+        {% for image in idea.images.all %}
+        {% if image.public and image.lead %}
+            <a href="{{ idea.get_absolute_url }}">
+            <img src="{{ image.medium.url }}" 
+                 width="220"
+                 alt="{% if image.caption %}{{ image.caption }}
+                      {% else %}{{ image.title }}{% endif %}"
+                 title="{{ image.title }}"/>
+            </a>
+            {% endif %}
+            {% endfor %}
+            <section class="description">
+                <h3><a href="{{ idea.get_absolute_url }}">{{ idea.title }}</a></h3>
+                <p>{{ idea.tagline|truncatewords:10 }}</p>
+                <p><strong><a href="{% url ideas-by-city idea.city|slugify %}">{{ idea.city }}</a></strong><br/>
+                <em>Added by {{ idea.user }}</em></p>
+            </section>
+            <ul class="category-list">
+                {% for category in project.categories.all %}
+                <li class="{{ category.name|lower }}"> 
+                    <a title="{{ category.group.name }}: {{ category.name }}" 
+                       href="{% url ideas-by-category category.slug %}"> <img src="{{ category.small.url }}"
+                       height="{{ category.small.height }}"
+                       width="{{ category.small.width }}" />
+                    </a>
+                </li>
+        {% endfor %}
+        </ul>
+        <span class="project-type">
+            {% if idea|model_name == 'Idea' %}
+            Idea
+            {% else %}
+            Completed
+            {% endif %}
+            </span>
+    </article>
+{% endfor %}
+</section>
+{% endblock project_list %}

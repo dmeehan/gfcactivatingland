@@ -1,0 +1,14 @@
+{% extends "portfolio/idea_list.html" %}
+{% block title %}{{ block.super }} | Categories | {{ category.name }}{% endblock %}
+{% block page_header %}
+<header>
+    <img src="{{ category.medium.url }}" 
+         width="48"
+     />
+    <h1>Explore / {{ category.name }}</h1>
+</header>
+{% endblock page_header %}
+{% block project_list %}
+<p style="clear:both; margin:10px 0;">{{ category.description }}</p>
+{{ block.super }}
+{% endblock project_list %}

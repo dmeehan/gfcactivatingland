@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} / Explore{% endblock title %}
+{% block bodyid %}id="explore"{% endblock bodyid %}
+{% block content %}
+{% load flatblock_tags %}
+<header class="page">
+    <h1>Explore Ideas</h1>
+</header>
+<section class="category-group">
+{% regroup category_list by group as categories %}
+{% for group in categories %}
+    {% for category in group.list %}
+    <article class="category">
+        <header>
+            <a class="tooltip-target" 
+               id="category-target-{{ forloop.counter }}"
+               href="{% url ideas-by-category category.slug %}">
+                <img src="{{ category.medium.url }}" width="48" />
+                <h3>{{ category.name }}</h3>
+            </a>
+            <p class="tooltip-content" id="category-content-{{ forloop.counter }}">{{ category.description }}<p>
+        </header>
+        <section class="featured">
+            <header><h4>Featured {{ category.name }} Project</h4></header>
+            {% for item in category.featuredcategoryidea_set.all %}
+            <article class="card">
+                {% for image in item.idea.images.all %}
+                {% if image.public and image.lead %}
+                    <a href="{{ item.idea.get_absolute_url }}">
+                    <img src="{{ image.medium.url }}" 
+                         width="220"
+                         alt="{% if image.caption %}{{ image.caption }}
+                             {% else %}{{ image.title }}{% endif %}"
+                         title="{{ image.title }}"/>
+                     </a>
+                {% endif %}
+                {% endfor %}
+                <section class="description">
+                    <h5><a href="{{ item.idea.get_absolute_url }}">{{ item.idea.title }}</a></h5>
+                    <h6>{{ item.idea.tagline }}</h6>
+                </section>
+            </article>
+            {% endfor %}
+        </section>
+     </article>
+    {% endfor %}
+   {% endfor %}
+</section>
+<nav>
+    <h2>Find Ideas</h2>
+    {% if categories %}
+    {% regroup category_list by group as categories %}
+    {% for group in categories %}
+        <h3>By {{ group.grouper }}</h3>
+        <ul>
+        {% for category in group.list %}
+            <li style="clear:both;overflow:auto;margin:5px 0;">
+                <a style="line-height:32px; text-decoration:none;" href="{% url ideas-by-category category.slug %}">
+                <img style="float:left; margin-right:5px" src="{{ category.small.url }}" />
+                {{ category.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+    {% endif %}
+    <h3>By City</h3>
+    {% if cities %}
+    <ul>
+    {% for city in cities %}
+        <li><a href="">{{ city }}</a></li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <h3>By Tag</h3>
+    {% load tagging_tags %}
+    {% tags_for_model portfolio.Idea as tags %}
+    {% if tags %}
+    <p>
+    {% for tag in tags %}
+        <a href="">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    </p>
+    {% endif %}
+</nav>
+{% endblock content %}
+{% block js_local %}
+<script type="text/javascript" src="/static/js/jquery/jquery.ezpz_tooltip.min.js"></script>
+{% endblock js_local %}

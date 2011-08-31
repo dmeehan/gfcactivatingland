@@ -1,0 +1,7 @@
+{% extends "portfolio/project_detail.html" %}
+{% block title %}{{ block.super }} | Ideas | {{ project.title }}{% endblock %}
+{% block website %}{% endblock %}
+{% block tag_url %}{% url ideas-by-tag tag=tag.name %}{% endblock %}
+{% block project_type %}
+<span class="project-type idea">Idea</span>
+{% endblock project_type %}

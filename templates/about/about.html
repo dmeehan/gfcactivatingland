@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }}: About{% endblock %}
+{% block bodyid %}id="about"{% endblock bodyid %}
+{% block content %}
+{% load flatblock_tags %}
+<header>
+{% flatblock "about.title" using "flatblocks/flatblock_header.html" %}
+</header>
+<div class="main info">
+{% for item in object_list %}
+    <article class="article">
+            {% for image in item.content_object.images.all %}
+                    {% if image.public %}
+                        <a href="#">
+                        <img src="{{ image.large.url }}"
+                             width="{{ image.large.width }}"
+                             height="{{ image.large.height }} "
+                             alt="{{ image.title }}"
+                             title="{{ image.caption }}" />
+                        </a>
+                    {% endif %}
+            {% endfor %}
+            <h2>{{ item.content_object.title }}</h2>
+            {{ item.content_object.body|safe }}
+    </article>
+{% endfor %}
+</div>
+<aside>
+    {% flatblock "about.how" using "flatblocks/flatblock_simple.html" %}
+    {% flatblock "about.lead" using "flatblocks/flatblock_simple.html" %}
+    {% flatblock "about.partners" using "flatblocks/flatblock_simple.html" %}
+    {% flatblock "about.contact" using "flatblocks/flatblock_simple.html" %}
+</aside>
+</div>
+{% endblock %}

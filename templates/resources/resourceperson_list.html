@@ -1,0 +1,11 @@
+{% extends "resources/contact_list.html" %}
+{% block section_title %}{{ block.super }}| People{% endblock section_title %}
+{% block page_header %}
+<header>
+    <h1>Resources / People</h1>
+</header>
+{% endblock page_header %}
+
+{% block content_header %}
+<h2>{{ object.full_name }}</h2>
+{% endblock content_header %}

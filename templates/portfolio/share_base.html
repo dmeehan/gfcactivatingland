@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block section_title %}| Share{% endblock section_title %}
+{% block bodyid %}id="share"{% endblock bodyid %}
+{% load flatblock_tags %}
+{% block page_header %}
+<header>
+    {% flatblock "share.title" using "flatblocks/flatblock_header.html" %}
+</header>
+{% endblock page_header %}
+
+{% block section_nav %}
+{% endblock section_nav %}

@@ -1,0 +1,21 @@
+{% extends "posts/posts.html" %}
+{% block title %}
+{{ block.super}} | Links | {{ object.title }}
+{% endblock title %}
+{% block main %}
+<article class="article">
+    <header>
+        <h1>{{ object.title }}</h1>
+        <p class="posted">Posted by {{ object.posted_by }} on {{ object.pub_date|date:"D d M Y g:i a" }}</p>
+    </header>
+    <section class="description">
+        <p>{{ object.description|safe }}</p>
+        <p><a href="{{ object.website }}">Read More</a></p>
+    </section>
+    {% if object.via and object.via_url %}
+    <section>
+        <p>Via: <a href="object.via_url">{{ object.via }}</a></p>
+    </section>
+    {% endif %}
+</article>
+{% endblock main %}

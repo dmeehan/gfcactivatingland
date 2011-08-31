@@ -1,0 +1,74 @@
+{% extends "resources/resources_base.html" %}
+{% block resources %}
+<div class="resources">
+    {% if articles %}
+    <section id="articles">
+        <h2>Action Blog</h2>
+        {% for article in articles %}
+        <article class="resource">
+            {% for image in article.images.all %}
+            {% if image.public %}
+            <a href="{{ article.get_absolute_url }}">
+            <img src="{{ image.large.url }}" 
+                 width="440"                        
+                 alt="{% if image.caption %}{{ image.caption }}
+                      {% else %}{{ image.title }}{% endif %}"
+                title="{{ image.title }}"/>
+            </a>
+            {% endif %}
+            {% endfor %}
+            <h3><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
+            {{ article.excerpt|safe }}
+            <p><a href="{{ article.get_absolute_url }}">Read More</a></p>
+        </article>
+        {% endfor %}
+        {% block view_all_articles %}
+        <p class="view-all"><a class="drilldown" href="{% url resources-post-list %}">View All Posts</a></p>
+        {% endblock view_all_articles %}
+    </section>
+    {% endif %}
+    </div>
+<div class="resources">
+    {% if links %}
+    <section id="links">
+        <h2>Web Resources</h2>
+        <ul class="resource">
+        {% for link in links %}
+            <li><a href="{{ link.get_absolute_url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+        {% endfor %}
+        </ul>
+        {% block view_all_links %}
+        <p class="view-all"><a class="drilldown" href="{% url resources-link-list %}">View All Web Resources</a></p>
+        {% endblock view_all_links %}
+    </section>
+    {% endif %}
+    
+    {% if orgs %}
+    <section id="organizations">
+        <h2>Organizations</h2>
+        <ul>
+        {% for org in orgs %}
+            <li><a href="{{ org.get_absolute_url }}">{{ org.name }}</a></li>
+        {% endfor %}
+        </ul>
+        {% block view_all_orgs %}
+        <p class="view-all"><a class="drilldown" href="{% url resources-org-list %}">View All Organizations</a></p>
+        {% endblock view_all_orgs %}
+    </section>
+    {% endif %}
+    
+    {% if people %}
+    <section id="people">
+        <h2>People</h2>
+        <ul>
+        {% for person in people %}
+            <li><a href="{{ person.get_absolute_url }}">{{ person.full_name }}</a></li>
+        {% endfor %}
+        </ul>
+        {% block view_all_people %}
+        <p class="view-all"><a class="drilldown" href="{% url resources-person-list %}">View All People</a></p>
+        {% endblock view_all_people %}
+    </section>
+    {% endif %}
+</div>
+{% endblock resources %}

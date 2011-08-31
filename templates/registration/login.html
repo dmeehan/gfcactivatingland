@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block css_local %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}uni_form/uni-form.css" type="text/css" />
+{% endblock css_local %}
+{% block content %}
+<header>
+    <h1>{% trans "Log In to Your Profile" %}</h1>
+</header>
+<div class="info">
+<form method="post" action=".">
+  {% csrf_token %}
+  <ul>
+  {{ form.as_ul }}
+    <li class="submit-row">  
+    <button class="primary" type="submit" value="{% trans 'Log in' %}">Log In</button>
+    </li>
+  <input type="hidden" name="next" value="{{ next }}" />
+  </ul>
+</form>
+
+<p>{% trans "Forgot password" %}? <a href="{% url auth_password_reset %}">{% trans "Reset it" %}</a></p>
+<p>{% trans "Don't have an account?" %} <a href="{% url registration_register %}">{% trans "Register" %}</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block css_local %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}uni_form/uni-form.css" type="text/css" />
+{% endblock css_local %}
+{% block content %}
+<header>
+<h1>Sign up for the Action Manual</h1>
+</header>
+<div class="info">
+<form method="post" action=".">
+<ul>
+  {{ form.as_ul }}
+  <li class="submit-row">
+    <button class="primary" type="submit" value="Sign Up">Sign Up</button>
+  </li>
+</ul>
+</form>
+</div>
+{% endblock %}
+{% block js_local %}
+<script src="{{ MEDIA_URL }}uni_form/uni-form.jquery.js" type="text/javascript"></script>
+{% endblock js_local %}
+

@@ -1,0 +1,29 @@
+{% extends "resources/resources_base.html" %}
+{% block resources %}
+{% if object_list %}
+{% for object in object_list %}
+<article class="contact">
+<header>
+{% block content_header %}{% endblock content_header %}
+</header>
+    {% block description %}
+    <section class="description">
+        {% block org_type %}{% endblock org_type %}
+        
+        <p>{{ object.description|safe }}</p>
+        
+        {% block gender %}{% endblock gender %}
+        
+        {% block birthdate %}{% endblock birthdate %}
+    </section>
+    {% endblock description %}
+    
+    <p><a href="{{ object.get_absolute_url }}">More info</a></p>
+</article>
+{% endfor %}
+{% else %}
+<article class="empty">
+<p>We're sorry, but no items matched your query. Use the navigation on the right to continue your search.</p>
+</article>
+{% endif %}
+{% endblock resources %}

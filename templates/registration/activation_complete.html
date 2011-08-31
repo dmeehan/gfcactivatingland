@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<header>
+    <h1>{% trans "Your account is now activated" %}</h1>
+<header>
+<p class="submit-row"><a class="button primary" href="{% url auth_login %}?next={% url share %}">{% trans "Log in" %}</a></p
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "portfolio/project_detail.html" %}
+{% block title %}{{ block.super }} | Precedents | {{ project.title }}{% endblock %}
+{% block designers %}
+{% endblock %}
+{% block related %}
+{% load tagging_tags %}
+{% tagged_items_related project portfolio.Idea as ideas 4 %}
+{% if ideas %}
+<aside id="related">
+  <h2>Related Ideas</h2>
+  <ul>
+    {% for idea in ideas %}
+    <li> 
+    {% for image in idea.images.all %}
+    {% if image.public and image.lead %} 
+    <a href="{{ idea.get_absolute_url }}">
+    <img src="{{ image.small.url }}" 
+         width="{{ image.small.width }}"
+         height="{{ image.small.height }}"
+         alt="{% if image.caption %}{{ image.caption }}
+              {% else %}{{ image.title }}{% endif %}"
+         title="{{ image.title }}"/>
+     </a> {% endif %}
+    {% endfor %}
+      <p><a href="{{ idea.get_absolute_url }}">{{ idea.title }}</a></p>
+    </li>
+    {% endfor %}
+  </ul>
+</aside>
+{% endif %}
+
+{% block project_type %}
+<span class="project-type precedent">Completed</span>
+{% endblock project_type %}
+{% endblock %}

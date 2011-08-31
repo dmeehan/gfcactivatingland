@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="info">
+{% if account %}
+<header>
+<h1>{% trans "Account successfully activated" %}</h1>
+</header>
+<p><a href="{% url auth_login %}">{% trans "Log in" %}</a></p>
+
+{% else %}
+<header>
+<h1>{% trans "Account activation failed" %}</h1>
+</header>
+{% endif %}
+</div>
+{% endblock %}

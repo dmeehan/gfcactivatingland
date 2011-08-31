@@ -1,0 +1,55 @@
+{% extends "portfolio/share_base.html" %}
+{% block section_title %}| Share{% endblock section_title %}
+{% block bodyid %}id="share"{% endblock bodyid %}
+{% block content %}
+{% block page_header %}
+<header>
+    <h1>{% if add %}Add{% else %}Edit{% endif %} Image For {{ idea.title }}</h1>
+</header>
+{% endblock page_header %}
+<div class="info">
+<p>Each idea should have at least one accompanying image. Images must be at least 960px wide,
+ less than 2MB, and in .png or .jpg format.</p>
+<form enctype="multipart/form-data" method="post" action=".">
+    <ul>
+        {{ form.as_ul }}
+        <li class="submit-row">
+            <button class="primary" type="submit" value="Save and Finish" class="default" name="_save">
+            Save and Finish
+            </button>
+        </li>
+        <li class="submit-row">
+            {% if add %}
+            <button class="primary" type="submit" value="Save and Add Another" name="_addanother">
+                Save and Add Another
+            </button>
+            {% else %}
+            <button class="primary" type="submit" value="Save and Continue Editing" name="_edit">
+                Save and Continue Editing
+            </button>
+            {% endif %}
+        </li>
+    </ul>
+</form>
+</div>
+{% block section_nav %}
+<aside>
+{% if idea.images.all %}
+<h2>Images</h2>
+<ul>
+{% for image in idea.images.all %}
+    {% if image.public %}
+    <li>
+        <img src="{{ image.medium.url }}" 
+             width="300"
+             alt="{% if image.caption %}{{ image.caption }}{% else %}{{ image.title }}{% endif %}" 
+             title="{{ image.title }}"/>
+        <p class="caption">{{ image.title }} <a href="{% url portfolio-image-edit idea.id image.id %}">Edit</a></p>
+    </li>
+    {% endif %}
+   {% endfor %}
+   </ul>
+</aside>
+{% endif %}
+{% endblock section_nav %}
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends "portfolio/explore_base.html" %}
+{% load portfolio_tags %}
+{% block project_list %}
+<section class="focus">
+{% for idea in object_list %}
+    <article class="card {{ idea|model_name|lower }}">
+        {% for image in idea.images.all %}
+        {% if image.public and image.lead %}
+            <a href="{{ idea.get_absolute_url }}">
+            <img src="{{ image.medium.url }}" 
+                 width="222"
+                 alt="{% if image.caption %}{{ image.caption }}
+                      {% else %}{{ image.title }}{% endif %}"
+                 title="{{ image.title }}"/>
+            </a>
+            {% endif %}
+            {% endfor %}
+            <section class="description">
+                <h2><a href="{{ idea.get_absolute_url }}">{{ idea.title }}</a></h2>
+                <p>{{ idea.city }}, {{ idea.state }}</p>
+                <p>{{ idea.tagline }}</p>
+            </section>
+            <span class="project-type">
+            {% if idea|model_name == 'Idea' %}
+            Idea
+            {% else %}
+            Completed
+            {% endif %}
+            </span>
+    </article>
+{% endfor %}
+</section>
+{% endblock project_list %}

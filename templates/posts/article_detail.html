@@ -1,0 +1,15 @@
+{% extends "posts/posts.html" %}
+{% block title %}
+{{ block.super}} | Articles | {{ object.title }}
+{% endblock title %}
+{% block main %}
+<article class="article">
+<header>
+    <h1>{{ object.title }}</h1>
+    <p class="posted">Posted by: {{ object.posted_by }} on {{ object.pub_date }}</p>
+</header>
+    <section class="description">
+        <p>{{ object.body|safe }}</p>
+    </section>
+</article>
+{% endblock main %}

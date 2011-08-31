@@ -1,0 +1,48 @@
+{% extends "contacts/contacts.html" %}
+{% block main %}
+<article class="contact">
+<header>
+{% block content_header %}{% endblock content_header %}
+</header>
+    {% block description %}
+    <section class="description">
+        {% block org_type %}{% endblock org_type %}
+        
+        <p>{{ object.description|safe }}</p>
+        
+        {% block gender %}{% endblock gender %}
+        
+        {% block birthdate %}{% endblock birthdate %}
+    </section>
+    {% endblock description %}
+    
+    {% block contact_info %}
+    <section class="contact-info">
+        <h2>Contact Info</h2>
+        <div class="vcard">
+            {% block org %}{% endblock org %}
+            <p class="adr">
+                {% if object.address_line1 %}<span class="street-address">{{ object.address_line1 }}</span><br>{% endif %}
+                {% if object.address_line2 %}<span class="street-address2">{{ object.address_line2 }}</span><br>{% endif %}
+                {% if object.city %}<span class="city">{{ object.city }}</span>{% endif %}
+                {% if object.state %}<span class="state">{{ object.state }}</span>{% endif %}
+                {% if object.code %} <span class="code">{{ object.code }}</span><br>{% endif %}
+                {% if object.country %}<span class="country">{{ object.country }}</span>{% endif %}
+            </p>
+            {% if object.phone or object.fax or object.mobile %}
+            <p class="tel"><span class="land">tel: {{ object.phone }}</span><br />
+            {% endif %}
+            {% block mobile %}{% endblock mobile %}
+            {% if object.fax %}<span class="fax">fax: {{ object.fax }}</span><br />{% endif %}
+            </p>
+            {% if object.email %}
+            <p class="email">email: <a href="mailto:{{ object.email }}">{{ object.email }}</a></p>
+            {% endif %}
+            {% if object.website %}
+            <p class="url">web: {{ object.website|urlize }}</p>
+            {% endif %}
+        </div>
+    </section>
+    {% endblock contact_info %}
+</article>
+{% endblock main %}

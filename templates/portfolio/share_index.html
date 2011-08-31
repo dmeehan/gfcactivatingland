@@ -1,0 +1,54 @@
+{% extends "portfolio/share_base.html" %}
+{% block section_title %}| Share{% endblock section_title %}
+{% block bodyid %}id="share"{% endblock bodyid %}
+{% block content %}
+{% block page_header %}
+<header>
+    <h1>Get Moving!</h1>
+</header>
+{% endblock page_header %}
+<div class="detail">
+{% load flatblock_tags %}
+{% flatblock "share.intro" using "flatblocks/flatblock_simple.html" %}
+{% if not user.is_authenticated %}
+{% endif %}
+{% if user.is_authenticated %}
+<p class="submit-row"><a class="button primary" href="{% url idea-add %}">Share Your Idea</a></p>
+{% else %}
+<p>An Action Manual account is required to continue.</p>
+<p class="submit-row"><a class="button primary" href="{% url registration_register %}">Create an Account</a></p>
+<p>Already have an account?</p>
+<p class="submit-row"><a class="button primary" href="{% url auth_login %}?next={% url idea-add %}">Login</a></p>
+{% endif %}
+</div>
+{% block section_nav %}
+<aside>
+<h2>Recently Added Ideas</h2>
+{% for idea in recent %}
+<article style="border:1px solid #ccc; margin-bottom:10px;">
+    <section>
+        {% for image in idea.images.all %}
+        {% if image.public and image.lead %}
+        <a href="{{ idea.get_absolute_url }}">
+            <img src="{{ image.medium.url }}"
+                 width="298"
+                 alt="{% if image.caption %}{{ image.caption }}
+                      {% else %}{{ image.title }}{% endif %}"
+                 title="{{ image.title }}"  />
+         </a>
+         {% endif %}
+         {% endfor %}
+    </section>
+    <section style="padding:0 10px;">
+        <header>
+            <h3><a href="{{ idea.get_absolute.url }}">{{ idea.title }}</a></h3>
+        </header>
+        <p class="posted">Added by {{ idea.user }}</p>
+        <p>{{ idea.tagline }}</p>
+    </section>
+</article>
+{% endfor %}
+
+</aside>
+{% endblock section_nav %}
+{% endblock content %}

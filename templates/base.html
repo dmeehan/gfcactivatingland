@@ -1,0 +1,115 @@
+{% block doctype %}<!doctype html>{% endblock doctype %}
+
+<html lang="en" class="no-js">
+
+<head>
+{% block head %}
+    <meta charset="utf-8">
+    <!-- www.phpied.com/conditional-comments-block-downloads/ -->
+    <!--[if IE]><![endif]-->
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
+         Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>
+    {% block title %}
+        {% block site_title %}Grounds for Change: Activating Vacant Land{% endblock site_title %}
+        {% block section_title %}{% endblock section_title %}
+    {% endblock title %}
+    </title>
+    <meta name="description" content="">
+    <meta name="author" content="City Parks Association" />
+    <meta name="copyright" content="&copy; {% now "Y" %} City Parks Association" />
+    {% block css %}
+    <!-- CSS : implied media="all" -->
+    <link href="{{ MEDIA_URL }}css/base.css" rel="stylesheet" />
+    <!-- For the less-enabled mobile browsers like Opera Mini -->
+    {% endblock css %}
+    {% block css_local %}{% endblock css_local %}
+    {% block js_head %}
+    <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
+    <script src="{{ MEDIA_URL }}js/modernizr-latest.min.js"></script>
+    {% endblock js_head %}
+{% endblock head %}
+</head>
+
+
+<body {% block bodyid %}{% endblock bodyid %}>
+
+<header>
+{% block header %}
+    <h1><a title="Home" href="{% url home %}">Grounds for Change: Activating Vacant Land</a></h1>
+    <nav>
+        <ul id="accounts">
+             {% if user.is_authenticated %}
+                 <li class="user">
+                     <a title="User Profile" 
+                        href="{% url profiles_profile_detail user  %}">View Your Profile</a>
+                 <li class="login">
+                     <a title="Log Out" 
+                        href="{% url auth_logout %}">Log Out</a>
+               {% else %}
+                 <li><a title="Sign Up" 
+                      href="{% url registration_register %}">Sign Up</a></li>
+                 <li><a title="Log In" 
+                        href="{% url auth_login %}">Login</a></li>
+             {% endif %}
+        </ul>
+        <ul id="sections">
+        		<li class="explore"><a title="Get Inspired" href="{% url explore %}">Get Inspired</a></li>
+        		<li class="resources"><a title="Resources" href="{% url resources %}">Get Educated</a></li>
+        	    <li class="share"><a title="Get Moving" href="{% url share %}">Get Moving</a></li>
+        </ul>
+         <div id="search">
+            <form id="searchform" method="get" action="/search/">
+        	   <input type="search" name="q" id="searchinput" placeholder="Search" results=5 />
+            </form>
+         </div>
+    </nav>
+{% endblock header %}
+</header>
+
+<section id="content">
+{% block content %}
+    {% block page_header %}{% endblock page_header %}
+    {% block main %}{% endblock main %}
+    {% block aside %}{% endblock aside %}
+{% endblock content %}
+</section>
+
+<footer>
+{% block footer %}
+    <p id="copyright">&copy; {% now "Y" %} Center for Community Progress and City Parks Association</p>
+    <nav>
+        <ul>
+            <li><a href="/about/">About Grounds for Change</a> | </li>
+            <li><a href="http://www.communityprogress.net/">Center for Community Progress</a></li>
+        </ul>
+    </nav>
+{% endblock footer %}
+</footer>
+
+{% block js_global %}
+    <!-- Javascript at the bottom for fast page loading -->
+    
+    <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script>!window.jQuery && document.write('<script src="{{ MEDIA_URL }}static/js/jquery/jquery-latest.min.js"><\/script>')</script>
+    
+    <!-- asynchronous google analytics: mathiasbynens.be/notes/async-analytics-snippet 
+       change the UA-XXXXX-X to be your site's ID -->
+    <script>
+    var _gaq = [['_setAccount', 'UA-9102912-6'], ['_trackPageview']];
+    (function(d, t) {
+    var g = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+    g.async = true;
+    g.src = '//www.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g, s);
+    })(document, 'script');
+    </script>
+{% endblock js_global %}
+    
+{% block js_local %}
+{% endblock js_local %}
+</body>
+</html>

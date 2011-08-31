@@ -1,0 +1,27 @@
+{% extends "portfolio/explore_base.html" %}
+{% load portfolio_tags %}
+{% block project_list %}
+<section class="focus">
+{% for project in object_list %}
+    <article class="card {{ project|model_name }}">
+        {% for image in project.images.all %}
+        {% if image.public and image.lead %}
+            <a href="{{ project.get_absolute_url }}">
+            <img src="{{ image.medium.url }}" 
+                 width="222"
+                 alt="{% if image.caption %}{{ image.caption }}
+                      {% else %}{{ image.title }}{% endif %}"
+                 title="{{ image.title }}"/>
+            </a>
+            {% endif %}
+            {% endfor %}
+            <section class="description">
+                <h2><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h2>
+                <p>{{ project.city }}, {{ project.state }}</p>
+                <p>{{ project.tagline }}</p>
+                <p>{{ project|model_name }}</p>
+            </section>
+    </article>
+{% endfor %}
+</section>
+{% endblock project_list %}

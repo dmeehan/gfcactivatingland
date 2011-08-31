@@ -1,0 +1,25 @@
+{% extends "resources/resources_base.html" %}
+{% block section_title %}{{ block.super }}| Web | {{ object.title }} {% endblock section_title %}
+{% block page_header %}
+<header>
+    <h1>Resources / Web</h1>
+</header>
+{% endblock page_header %}
+
+{% block resources %}
+<article class="link">
+    <header>
+        <h2>{{ object.title }}</h2>
+        <p class="posted">Posted by {{ object.posted_by }} on {{ object.pub_date|date:"D d M Y g:i a" }}</p>
+    </header>
+    <section class="description">
+        <p>{{ object.description|safe }}</p>
+        <p><a href="{{ object.website }}">Visit Site</a></p>
+    </section>
+    {% if object.via and object.via_url %}
+    <section>
+        <p>Via: <a href="object.via_url">{{ object.via }}</a></p>
+    </section>
+    {% endif %}
+</article>
+{% endblock resources %}

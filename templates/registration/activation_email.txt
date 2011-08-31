@@ -1,0 +1,9 @@
+{% load i18n %}
+Thank you for registering at {{ site.name }}! To get started, 
+click the link below to activate your account.
+
+{% trans "Activate account at" %} {{ site.name }}:
+
+http://{{ site.domain }}{% url registration_activate activation_key %}
+
+{% blocktrans %}Link is valid for {{ expiration_days }} days.{% endblocktrans %}

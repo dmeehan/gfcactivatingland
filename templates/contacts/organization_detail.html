@@ -1,0 +1,12 @@
+{% extends "contacts/contacts_detail.html" %}
+
+{% block title %}
+{{ block.super}} | {{ object.name }}
+{% endblock title %}
+
+{% block content_header %}
+<h1>{{ object.name }}</h1>
+{% endblock content_header %}
+
+{% block org_type %}
+{% endblock org_type %}

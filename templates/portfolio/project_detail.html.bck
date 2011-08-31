@@ -1,0 +1,215 @@
+{% extends "portfolio/portfolio.html" %}
+{% block title %}{{ block.super }} : {{ object.title }}{% endblock %}
+{% block css %}{{ block.super }}<link rel="stylesheet" type="text/css" href="/static/js/shadowbox/shadowbox.css">{% endblock %}
+{% block js %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" 
+src="/static/js/jquery/jcarousel-lite/jcarousellite_1.0.1.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery/mousewheel/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery/easing/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="/static/js/shadowbox/shadowbox.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#slideshow").jCarouselLite({
+            visible: 1,
+            mouseWheel: false,
+            speed: 200,
+            easing: "easeInOutSine",
+            btnGo: [{% spaceless %}{% for obj in object.projectvisual_set.all %}{% if obj.content_object.public %}".{{ forloop.counter0 }}"{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}]{% endspaceless %},
+            btnNext: ".next",
+            btnPrev: ".prev"
+	});
+    });
+</script>
+<script type="text/javascript">
+Shadowbox.init({
+});
+</script>
+{% endblock %}
+{% block content %}
+<div id="project-header">
+    <h2>{{ object.title }}</h2>
+</div>
+<div id="thumbnails" class="meta">
+    <ul>
+    {% spaceless %}
+       {% for obj in object.projectvisual_set.all %}
+            {% if obj.content_object.thumbnail %}
+                {% if obj.content_object.public %}
+                   <li>
+                        <a href="#" 
+                           class="{{ forloop.counter0 }}" 
+                           title="{{ obj.content_object.caption }}">
+                        <img
+                            src="{{ obj.content_object.thumbnail.url }}" 
+                            width="{{ obj.content_object.thumbnail.width }}"
+                      	    height="{{ obj.content_object.thumbnail.height }}"
+                      	    alt="{% if obj.content_object.caption %}{{ obj.content_object.caption }}
+                          	{% else %}{{ obj.content_object.title }}{% endif %}"
+                      	    title="{{ obj.content_object.title }}"/>
+                        </a>
+                   </li>
+                {% endif %}
+            {% endif %}
+      {% endfor %}
+    {% endspaceless %}
+    </ul>
+</div>
+<div id="project">
+    <a href="#" class="control prev" title="Previous Image">&lt;</a>
+    <div id="slideshow">
+        <ul>
+         {% spaceless %}
+           {% for obj in object.projectvisual_set.all %}
+                {% if obj.content_object.thumbnail %}
+                    {% if obj.content_object.public %}
+                        <li>
+                            <a href="#" 
+                               title="{{ obj.content_object.title }}">
+                            <img
+                                src="{{ obj.content_object.display.url }}" 
+                      	        width="{{ obj.content_object.display.width }}"
+                      	        height="{{ obj.content_object.display.height }}"
+                                alt="{% if obj.content_object.caption %}{{ obj.content_object.caption }}
+                          	    {% else %}{{ obj.content_object.title }}{% endif %}"
+                      	        title="{{ obj.content_object.title }}"/>
+                      	   </a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endspaceless %}
+        </ul>
+    </div>
+    <a href="#" class="control next" title="Next Image">&gt;</a>
+    <h3>{{ object.tagline }}</h3>
+    <div id="description">
+        {{ object.description_html|safe }}
+    </div>
+    {% if object.enable_comments %}
+    <div id="comments">
+        <h3>What People are Saying About {{ object.title }}</h3>
+        {% load comments %}
+        {% load markup %}
+        {% get_comment_list for object as comment_list %}
+        {% for comment in comment_list %}
+            <p class="commenter"><em>On {{ comment.submit_date|date:"F j, Y" }}, 
+               {{ comment.name }} said:</em></p>
+            <p>{{ comment.comment|markdown:"safe" }}</p>
+        {% endfor %}
+        <h3>Join the Discussion!</h3>
+        {% render_comment_form for object %}
+    </div>
+    {% endif %}
+</div>
+<div id="classification" class="meta">
+    <h3>Categories</h3>
+    <ul id="types" class="category-list">
+      {% for obj in object.categories.all %}
+        <li class="{{ obj.category.name|lower }}"><a title="{{ obj.category.name }}">{{ obj.category.name }}</a></li>
+      {% endfor %}
+    </ul>
+    <h3>Timeframes</h3>
+    <ul>
+      {% for obj in object.timeframes.all %}
+        <li><a title="{{ obj.name }}">{{ obj.name }}</a></li>
+      {% endfor %}
+    </ul>
+
+    <h3>Scales</h3>
+    <ul>
+      {% for obj in object.scales.all %}
+        <li class="{{ obj.name|lower }}"><a title="{{ obj.name }}">{{ obj.name }}</a></li>
+      {% endfor %}
+    </ul>
+    <h3>User Groups</h3>
+     <ul>
+      {% for obj in object.user_groups.all %}
+        <li class="{{ obj.name|lower }}"><a title="{{ obj.name }}">{{ obj.name }}</a></li>
+      {% endfor %}
+    </ul>
+    <h3>Tags</h3>
+    <ul>
+        {% load tagging_tags %}
+<div id="classification" class="meta">
+    <h3>Related Ideas</h3>
+    <ul id="types" class="category-list">
+      {% for obj in object.categories.all %}
+        <li class="{{ obj.category.name|lower }}"><a title="{{ obj.category.name }}">{{ obj.category.name }}</a></li>
+      {% endfor %}
+    </ul>
+    <h4>Timeframes</h4>
+    <ul>
+      {% for obj in object.timeframes.all %}
+        <li><a title="{{ obj.name }}">{{ obj.name }}</a></li>
+      {% endfor %}
+    </ul>
+
+    <h4>Scales</h4>
+    <ul>
+      {% for obj in object.scales.all %}
+        <li class="{{ obj.name|lower }}"><a title="{{ obj.name }}">{{ obj.name }}</a></li>
+      {% endfor %}
+    </ul>
+    <h4>User Groups</h4>
+     <ul>
+      {% for obj in object.user_groups.all %}
+        <li class="{{ obj.name|lower }}"><a title="{{ obj.name }}">{{ obj.name }}</a></li>
+      {% endfor %}
+    </ul>
+    <h4>Tags</h4>
+    <ul>
+        {% load tagging_tags %}
+        {% tags_for_object object as tags %}
+        {% for tag in tags %}
+        <li>{{ tag.name }}</li>
+        {% endfor %}
+    </ul>
+</div>
+        
+{% tags_for_object object as tags %}
+        {% for tag in tags %}
+        <li>{{ tag.name }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div id="related" class="meta">
+    <h3>Precedents</h3>
+    <ul>
+        <li><a href="http://www.somertontanksfarm.org/">
+             <img src="/static/images/somerton.png" width="140" height="80"
+                  alt="Somerton Tank Farms"
+                  title="Somerton Tank Farms" /></a>
+             <p><a href="http://www.somertontanksfarm.org">Somerton Tank Farm</a></p>
+        </li>
+        <li><a href="http://www.greensgrow.org/">
+            <img src="/static/images/greensgrow.png" 
+                 width="140"
+                 height="80"
+                 alt="Greensgrow Farms"
+                 title="Greensgrow Farms"/></a>
+                 <p><a href="http://www.greensgrow.org">Greensgrow Farms</a></p>
+        </li>
+        <li><a href="http://www.millcreekurbanfarm.org/">
+            <img src="/static/images/mill_creek.png" width="140" height="80"
+                 alt="Mill Creek Urban Farm"
+                 title="Mill Creek Urban Farm"/></a>
+           <p><a href="http://www.millcreekurbanfarm.org/">Mill Creek Urban Farm</a></p>
+        </li>
+    </ul>
+    <h3>Resources</h3>
+</div>
+<div id="designers" class="meta">
+    <h3>The Designers</h3>
+    <ul id="designer">
+        {% for obj in object.design_firms.all %}
+        <li><a href="{{ obj.entity.website }}" 
+               title="{{ object.entity.name }}">
+               <strong>{{ obj.name }}</strong></a>
+               &nbsp;&nbsp;<em>{{ obj.entity.city }}, {{ obj.entity.state }}</em>
+        </li>
+        {% endfor %}
+    </ul>
+    {{ object.designer_blurb_html|safe }}
+</div>
+{% endblock %}

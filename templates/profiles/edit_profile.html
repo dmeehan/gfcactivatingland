@@ -1,0 +1,11 @@
+{% extends "profiles/profile_base.html" %}
+{% block section_title %}{{ block.super }} | Edit{% endblock %}
+<header><h1>Edit contact info for {{ user }} </h1></header>
+{% block profile %}
+
+ 
+<form method="POST" action="">
+    {{ form }}
+    <input type="submit" name="submit" value="Update" id="submit">
+</form>
+{% endblock profile %}

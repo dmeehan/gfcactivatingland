@@ -1,0 +1,34 @@
+{% extends "portfolio/portfolio.html" %}
+{% block title %}{{ block.super }} : Latest Projects{% endblock %}
+{% block content %}
+{% for project in latest %}
+    <div class="project">
+	   <h2>
+	       <a href="{{ project.get_absolute_url }}" 
+	          alt="{{ project.tagline }}" 
+	          title="{{ project.title }}">{{ project.title }}
+	       </a>
+	   </h2>
+	   <h3>{{ project.tagline }}</h3>
+       {% for obj in project.projectvisual_set.all %}
+            {% if obj.lead %}
+                <a href="{{ project.get_absolute_url }}">
+                {% if obj.content_object.thumbnail %}
+                    <img src="{{ obj.content_object.thumbnail.url }}" 
+              	         width="{{ obj.content_object.thumbnail.width }}"
+              	         height="{{ obj.content_object.thumbnail.height }}"
+              	         alt="{{ project.tagline }}" 
+                        title="{{ project.title }}" />
+                {% endif %}
+                {% if obj.content_object.still %}
+                    <img src="{{ obj.content_object.still.thumbnail.url }}" 
+              	         width="{{ obj.content_object.still.thumbnail.width }}"
+              	         height="{{ obj.content_object.still.thumbnail.height }}"
+              	         alt="{{ project.tagline }}" 
+                         title="{{ project.title }}" />
+                {% endif %}
+                </a>   
+            {% endif %}
+        {% endfor %}
+{% endfor %}
+{% endblock %}
