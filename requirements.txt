@@ -20,6 +20,7 @@ django-grappelli==2.2
 django-registration
 django-profiles
 django-admin_tools==0.4.0
+django-uni_form
 
 # github
--e git+git://github.com/dmeehan/actionmanual.git#egg=actionamanual
+-e git+git://github.com/dmeehan/actionmanual.git#egg=actionmanual
