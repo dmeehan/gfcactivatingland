@@ -12,15 +12,15 @@ markdown
 
 # django third party modules
 django==1.2.5
-south==0.7.3
-django-haystack==1.2.4
-django-imagekit==0.3.6
-django-flatblocks
-django-grappelli==2.2
-django-registration
-django-profiles
-django-admin_tools==0.4.0
-django-uni_form
+#south==0.7.3
+##django-haystack==1.2.4
+#django-imagekit==0.3.6
+#django-flatblocks
+#django-grappelli==2.2
+#django-registration
+#django-profiles
+#django-admin_tools==0.4.0
+#django-uni_form
 
 # github
 #-e git+git://github.com/dmeehan/actionmanual.git#egg=actionmanual
