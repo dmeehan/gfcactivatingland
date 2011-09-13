@@ -23,4 +23,4 @@ django-admin_tools==0.4.0
 django-uni_form
 
 # github
--e git+git://github.com/dmeehan/actionmanual.git#egg=actionmanual
+#-e git+git://github.com/dmeehan/actionmanual.git#egg=actionmanual
