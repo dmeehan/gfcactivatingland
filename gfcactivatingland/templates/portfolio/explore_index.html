@@ -3,7 +3,7 @@
 {% block project_list %}
 <section>
     <header><h2>Recently Added</h2></header>
-{% for idea in recent %}
+{% for idea in object_list %}
     <article class="card {{ idea|model_name|lower }}">
         {% for image in idea.images.all %}
         {% if image.public and image.lead %}
