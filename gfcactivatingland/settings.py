@@ -186,3 +186,13 @@ MAPS_API_KEY = 'ABQIAAAAayJegR1S7-F1AMio1LsppBQxMADg_4nSozIzUm9-z1HndOaHgxQZcIZe
 PORTFOLIO_MARKUP = 'markdown'
 
 POSTS_MARKUP = 'markdown'
+
+
+#==============================================================================
+# local environment settings
+#==============================================================================
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
