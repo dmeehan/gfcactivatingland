@@ -8,7 +8,7 @@
     <h1>{% trans "Log In to Your Profile" %}</h1>
 </header>
 <div class="info">
-<form method="post" action=".">
+<form method="post" action="">
   {% csrf_token %}
   <ul>
   {{ form.as_ul }}
