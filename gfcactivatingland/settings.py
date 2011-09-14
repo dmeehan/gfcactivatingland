@@ -75,6 +75,7 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
 
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.auth",
     "django.core.context_processors.request",
@@ -84,11 +85,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
 )
-
-
-# TEMPLATE_CONTEXT_PROCESSORS += (
-    # 'Custom context processors here',
-# )
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
