@@ -1,100 +1,102 @@
 # Django settings for gfcactivatingland.org.
 
-DEBUG = True
+import os
+
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+SITE_ROOT = os.path.join(PROJECT_DIR, os.pardir)
+PROJECT_URL = '/'
+
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Douglas Meehan', 'dmeehan@gmail.com'),
+    # ('Douglas Meehan', 'dmeehan@gmail.com'),
 )
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'progressnow'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'progressnow'             # Not used with sqlite3.
-DATABASE_PASSWORD = 'titp4tcpdb'         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
-
-
-# Email settings
-EMAIL_HOST_USER = 'progressnow'
-EMAIL_HOST_PASSWORD = 'communityprogress1001'
-EMAIL_HOST = 'smtp.webfaction.com'
-EMAIL_PORT = '25'
-DEFAULT_FROM_EMAIL = 'admin@gfcactivatingland.org'
-SERVER_EMAIL = 'admin@gfcactivatingland.org'
-LOGIN_REDIRECT_URL = '/'
-
-
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
-TIME_ZONE = 'America/New_York'
-
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
-
 SITE_ID = 1
 
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
-USE_I18N = True
+#==============================================================================
+# Localization
+#==============================================================================
 
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = 'home/progressnow/webapps/static/'
+TIME_ZONE = 'America/New_York'
+LANGUAGE_CODE = 'en-us'
+USE_I18N = False    #internationalization machinery
+USE_L10N = True    #format dates, numbers and calendars according to locale
 
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = 'http://www.gfcactivatingland.org/static/'
 
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/static/grappelli/'
+#==============================================================================
+# Project URLS and media settings
+#==============================================================================
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '4$+=xnsz%k!u-*r#mp+s19+6!thtjq14nq9c#(t@x96c=cyqm2'
+ROOT_URLCONF = 'gfcactivatingland.urls'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'media/', 'uploads/')
+MEDIA_URL = '/uploads/'
+
+STATIC_ROOT = os.path.join(SITE_ROOT, 'media/', 'static/')
+STATIC_URL = '/static/'
+
+# ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
+
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_DIR, 'static'),
+]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+# 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+
+#==============================================================================
+# Templates
+#==============================================================================
+
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_DIR, 'templates'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.auth",
+    "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.request",
-    "grappelli.context_processors.admin_template_path",
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
+    "django.core.context_processors.i18n",
     'django.core.context_processors.media',
+    'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
 )
+
+# TEMPLATE_CONTEXT_PROCESSORS += (
+    # 'Custom context processors here',
+# )
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#   'django.template.loaders.eggs.Loader',
+)
+
+#==============================================================================
+# Middleware
+#==============================================================================
+
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.csrf.CsrfMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.csrf.CsrfResponseMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'actionmanual.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    'C:/Users/blue/WebProjects/actionmanual/actionmanual/home/cityparks/webapps/actionmanual_django/templates',
-)
+#==============================================================================
+# Installed Apps
+#==============================================================================
 
 INSTALLED_APPS = (
     # third party admin apps. Must go first.
@@ -135,11 +137,9 @@ INSTALLED_APPS = (
 )
 
 
-#############################
-#                           #
-#   Django App settings     #
-#                           #
-#############################
+#==============================================================================
+# Django app settings
+#==============================================================================
 
 
 # Comments settings
@@ -151,11 +151,9 @@ COMMENTS_CLOSE_AFTER = 0
 AUTH_PROFILE_MODULE = "accounts.UserProfile"
 
 
-#############################
-#                           #
-#   Third party settings    #
-#                           #
-#############################
+#==============================================================================
+# Third party app settings
+#==============================================================================
 
 
 # Grappelli Settings
@@ -179,11 +177,9 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 MAPS_API_KEY = 'ABQIAAAAayJegR1S7-F1AMio1LsppBQxMADg_4nSozIzUm9-z1HndOaHgxQZcIZevol--KGWt42h3WLWcr2a5Q'
 
 
-#############################
-#                           #
-#   Local App settings      #
-#                           #
-#############################
+#==============================================================================
+# Local app settings
+#==============================================================================
 
 
 # actionmanual.posts settings
