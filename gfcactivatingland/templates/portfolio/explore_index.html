@@ -45,7 +45,7 @@
 </section>
 <section>
     <header><h2>Featured</h2></header>
-{% for idea in featured_list %}
+{% for idea in featured %}
     <article class="card {{ idea|model_name|lower }}">
         {% for image in idea.images.all %}
         {% if image.public and image.lead %}
