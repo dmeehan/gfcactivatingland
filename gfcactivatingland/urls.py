@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^admin_tools/', include('admin_tools.urls')),
 
     # registration
-    (r'^accounts/', include('registration.backends.default.urls')),
+    (r'^accounts/', include('registration.urls')),
 
     # Profiles
     (r'^profiles/', include('profiles.urls')),
