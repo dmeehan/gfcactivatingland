@@ -785,7 +785,7 @@ article.link {
     display:block; 
     position:absolute; 
     top:1px;
-    right:25px; 
+    right:24px;
     z-index:2000; 
     text-transform:uppercase;
     font-weight:bold;
