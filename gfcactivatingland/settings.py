@@ -3,7 +3,7 @@
 import os
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-SITE_ROOT = os.path.join(PROJECT_DIR, os.pardir)
+SITE_ROOT = os.path.join(PROJECT_DIR, os.pardir, os.pardir)
 PROJECT_URL = '/'
 
 DEBUG = True
