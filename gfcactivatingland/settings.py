@@ -170,9 +170,8 @@ ADMIN_TOOLS_INDEX_DASHBOARD = 'gfcactivatingland.dashboard.CustomIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'gfcactivatingland.dashboard.CustomAppIndexDashboard'
 
 # Haystack settings
-HAYSTACK_SITECONF = 'actionmanual.search_sites'
+HAYSTACK_SITECONF = 'gfcactivatingland.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'simple'
-HAYSTACK_WHOOSH_PATH = '/home/cityparks/webapps/actionmanual_django/whoosh/actionmanual_index'
 
 # registation settings
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
