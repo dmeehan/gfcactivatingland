@@ -792,19 +792,19 @@ article.link {
     line-height:2em;
     font-size:12px;
     text-align:center;
-    width:123px;
+    width:125px;
     height:24px;
     color:#efefef;
-    -moz-transform: rotate(90deg);
-    -moz-transform-origin: bottom left;
-    -o-transform: rotate(90deg); 
-    -o-transform-origin: bottom left;
-    -ms-transform: rotate(90deg); 
-    -ms-transform-origin: bottom left;
+    -moz-transform: rotate(-90deg);
+    -moz-transform-origin:top right;
+    -o-transform: rotate(-90deg);
+    -o-transform-origin: top right;
+    -ms-transform: rotate(-90deg);
+    -ms-transform-origin: top right;
     -webkit-transform: rotate(-90deg); 
     -webkit-transform-origin: top right;
-    transform: rotate(90deg); 
-    transform-origin: bottom left;
+    transform: rotate(-90deg);
+    transform-origin: top right;
 }
 
 .no-csstransforms .project-type {
