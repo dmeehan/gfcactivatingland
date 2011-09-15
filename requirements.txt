@@ -21,6 +21,7 @@ django-registration
 django-profiles
 django-admin_tools==0.4.0
 django-uni_form
+django-staticfiles
 
 # github
 -e git+git://github.com/dmeehan/actionmanual.git#egg=actionmanual

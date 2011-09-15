@@ -33,38 +33,24 @@ USE_L10N = True    #format dates, numbers and calendars according to locale
 
 ROOT_URLCONF = 'gfcactivatingland.urls'
 
-#MEDIA_ROOT = os.path.join(SITE_ROOT, 'media/', 'uploads/')
-#MEDIA_URL = '/uploads/'
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'media/', 'uploads/')
+MEDIA_URL = '/uploads/'
 
-#STATIC_ROOT = os.path.join(SITE_ROOT, 'media/', 'static/')
-#STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(SITE_ROOT, 'media/', 'static/')
+STATIC_URL = '/static/'
 
 # ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-#ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
+ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
 
-#STATICFILES_DIRS = [
-#    os.path.join(PROJECT_DIR, 'static'),
-#]
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_DIR, 'static'),
+]
 
-#STATICFILES_FINDERS = (
-#    'django.contrib.staticfiles.finders.FileSystemFinder',
-#    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-# 'django.contrib.staticfiles.finders.DefaultStorageFinder',
-#)
-
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/progressnow/webapps/media/'
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = 'http://www.gfcactivatingland.org/media/'
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/grappelli/'
+STATICFILES_FINDERS = (
+   'django.contrib.staticfiles.finders.FileSystemFinder',
+   'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+ 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
 
 
 #==============================================================================
@@ -139,6 +125,7 @@ INSTALLED_APPS = (
     'profiles',
     'registration',
     'uni_form',
+    'staticfiles',
 
     # actionmanual apps
     'actionmanual.categories',
