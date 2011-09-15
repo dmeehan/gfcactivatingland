@@ -34,10 +34,10 @@ USE_L10N = True    #format dates, numbers and calendars according to locale
 ROOT_URLCONF = 'gfcactivatingland.urls'
 
 MEDIA_ROOT = os.path.join(SITE_ROOT, 'media/', 'uploads/')
-MEDIA_URL = '/uploads/'
+MEDIA_URL = '/media/uploads/'
 
 STATIC_ROOT = os.path.join(SITE_ROOT, 'media/', 'static/')
-STATIC_URL = '/static/'
+STATIC_URL = '/media/static/'
 
 # ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
