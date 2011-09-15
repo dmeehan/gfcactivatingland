@@ -21,13 +21,13 @@
     <meta name="copyright" content="&copy; {% now "Y" %} City Parks Association" />
     {% block css %}
     <!-- CSS : implied media="all" -->
-    <link href="{{ MEDIA_URL }}css/base.css" rel="stylesheet" />
+    <link href="{{ STATIC_URL }}css/base.css" rel="stylesheet" />
     <!-- For the less-enabled mobile browsers like Opera Mini -->
     {% endblock css %}
     {% block css_local %}{% endblock css_local %}
     {% block js_head %}
     <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
-    <script src="{{ MEDIA_URL }}js/modernizr-latest.min.js"></script>
+    <script src="{{ STATIC_URL }}js/modernizr-latest.min.js"></script>
     {% endblock js_head %}
 {% endblock head %}
 </head>
@@ -93,7 +93,7 @@
     
     <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-    <script>!window.jQuery && document.write('<script src="{{ MEDIA_URL }}static/js/jquery/jquery-latest.min.js"><\/script>')</script>
+    <script>!window.jQuery && document.write('<script src="{{ STATIC_URL }}js/jquery/jquery-latest.min.js"><\/script>')</script>
     
     <!-- asynchronous google analytics: mathiasbynens.be/notes/async-analytics-snippet 
        change the UA-XXXXX-X to be your site's ID -->
