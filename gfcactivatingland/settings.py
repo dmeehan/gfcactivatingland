@@ -165,9 +165,9 @@ GRAPPELLI_ADMIN_TITLE = 'Grounds for Change'
 
 
 # Admin Tools Settings
-ADMIN_TOOLS_MENU = 'actionmanual.menu.CustomMenu'
-ADMIN_TOOLS_INDEX_DASHBOARD = 'actionmanual.dashboard.CustomIndexDashboard'
-ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'actionmanual.dashboard.CustomAppIndexDashboard'
+ADMIN_TOOLS_MENU = 'gfcactivatingland.menu.CustomMenu'
+ADMIN_TOOLS_INDEX_DASHBOARD = 'gfcactivatingland.dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'gfcactivatingland.dashboard.CustomAppIndexDashboard'
 
 # Haystack settings
 HAYSTACK_SITECONF = 'actionmanual.search_sites'
