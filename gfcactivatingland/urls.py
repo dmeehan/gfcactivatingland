@@ -3,6 +3,7 @@ from django.contrib import admin
 
 from tagging.models import Tag
 admin.autodiscover()
+import gfcactivatingland.admin
 
 
 urlpatterns = patterns('',
