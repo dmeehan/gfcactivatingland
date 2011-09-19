@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.conf import settings
+
 from flatblocks.models import FlatBlock
 from flatblocks.admin import FlatBlockAdmin
 
